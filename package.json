@@ -2,6 +2,8 @@
     "dependencies": {
         "@airtable/blocks": "0.0.53",
         "flickr-sdk": "^3.9.0",
+        "lodash": "^4.17.15",
+        "lodash.debounce": "^4.0.8",
         "react": "^16.9.0",
         "react-dom": "^16.9.0"
     },
