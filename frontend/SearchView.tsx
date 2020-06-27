@@ -14,8 +14,6 @@ import Flickr from 'flickr-sdk';
 export function SearchView({ setAppState }) {
   const viewport = useViewport();
   const globalConfig = useGlobalConfig();
-  // TODO: Remove this.
-  // globalConfig.setAsync('flickrApiKey', '3013cb5461abfd67ab4bf6d9f010d29b');
 
   const [isLoading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("cats");
