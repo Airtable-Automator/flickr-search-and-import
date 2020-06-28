@@ -24,6 +24,9 @@ export function SearchView({ setAppState }) {
   const performSearch = (e) => {
     e.preventDefault();
     setLoading(true);
+
+    viewport.addMaxFullscreenSize({width: 1501});
+
     const flickrApiKey = globalConfig.get('flickrApiKey') as string;
     var flickr = new Flickr(flickrApiKey);
     flickr.photos.search({
@@ -32,6 +35,7 @@ export function SearchView({ setAppState }) {
       per_page: 50,
       extras: 'owner_name,tags,url_q,url_z,url_o',
     }).then(function (res) {
+      viewport.enterFullscreenIfPossible();
       setLoading(false);
       setAppState({
         index: 2,

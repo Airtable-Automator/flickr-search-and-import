@@ -72,6 +72,13 @@ export function SearchResultsView({ appState, setAppState }) {
   //   }
   // }, 100);
 
+  const reviewItems = () => {
+    const updatedAppState = {...appState};
+    updatedAppState.index = 3;
+    updatedAppState.state.selection = items;
+    setAppState(updatedAppState);
+  }
+
   return (
     <Box>
       <Box display="flex" style={topbarStyle} height={50} borderBottom='thick' width={viewport.size.width} justifyContent="space-between" alignItems="center">
@@ -83,7 +90,7 @@ export function SearchResultsView({ appState, setAppState }) {
             <Button variant="danger" size="large" onClick={backToSearch}>Back to Search</Button>
           </Box>
           <Box paddingRight='10px'>
-            <Button variant="primary" size="large" disabled={_.isEmpty(items)}>Review {items.length} item(s)</Button>
+            <Button variant="primary" size="large" onClick={reviewItems} disabled={_.isEmpty(items)}>Review {items.length} item(s)</Button>
           </Box>
         </Box>
       </Box>

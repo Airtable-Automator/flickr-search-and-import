@@ -16,6 +16,7 @@ import {
 import React, { useState } from 'react';
 import { SearchView } from './SearchView';
 import { SearchResultsView } from './SearchResultsView';
+import { ReviewSelection } from './ReviewSelection';
 
 // Airtable SDK limit: we can only update 50 records at a time. For more details, see
 // https://github.com/Airtable/blocks/tree/blob/packages/sdk/docs/guide_writes.md#size-limits-rate-limits
@@ -36,6 +37,8 @@ function ImportImagesFromFlickrBlock() {
             return (<SearchView setAppState={setAppState} />);
         case 2:
             return (<SearchResultsView appState={appState} setAppState={setAppState} />);
+        case 3:
+            return (<ReviewSelection appState={appState} setAppState={setAppState} />);
         default:
             return (<NotFoundPage appState={appState} />);
     }
