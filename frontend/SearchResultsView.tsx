@@ -9,7 +9,7 @@ import {
 } from '@airtable/blocks/ui';
 import _ from 'lodash';
 import debounce from "lodash.debounce";
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import CSS from 'csstype';
 
 export function SearchResultsView({ appState, setAppState }) {

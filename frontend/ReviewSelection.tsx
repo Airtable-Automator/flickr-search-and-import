@@ -9,7 +9,7 @@ import {
   useBase,
 } from '@airtable/blocks/ui';
 import _ from 'lodash';
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import CSS from 'csstype';
 
 // Airtable SDK limit: we can only update 50 records at a time. For more details, see
@@ -34,6 +34,7 @@ export function ReviewSelection({ appState, setAppState }) {
 
   const importImages = () => {
     console.log("Importing " + appState.state.selection.length + " items into the base");
+    // TODO: Do this check upfront when the app is starting, to display relevant error message.
     const createTableCheckResult = base.unstable_checkPermissionsForCreateTable();
     if (!createTableCheckResult.hasPermission) {
       alert(createTableCheckResult.reasonDisplayString);
