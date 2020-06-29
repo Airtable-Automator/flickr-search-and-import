@@ -1,41 +1,52 @@
 import {
-    Box,
     Text,
-    Button,
-    Icon,
     initializeBlock,
     useViewport,
-    useBase,
-    useGlobalConfig,
-    useRecords,
-    useLoadable,
-    useWatchable,
-    TablePickerSynced,
-    FieldPickerSynced,
+    useSettingsButton,
+    Box,
 } from '@airtable/blocks/ui';
-import React, { useState } from 'react';
-import { SearchView } from './SearchView';
+import React, { useState, useEffect } from 'react';
+import { Welcome } from './Welcome';
+import { SearchPage } from './SearchPage';
 import { SearchResultsView } from './SearchResultsView';
 import { ReviewSelection } from './ReviewSelection';
 import { ThankYou } from './ThankYouView';
-
-// Airtable SDK limit: we can only update 50 records at a time. For more details, see
-// https://github.com/Airtable/blocks/tree/blob/packages/sdk/docs/guide_writes.md#size-limits-rate-limits
-const MAX_RECORDS_PER_UPDATE = 50;
+import { useSettings } from './settings';
 
 type AppState = {
     index: number,
     state: object,
 }
+
 function ImportImagesFromFlickrBlock() {
-    // TODO: Check for API Key, if it exists skip the Welcome Component and move directly to <MainImport />
-    const [appState, setAppState] = useState<AppState>({ index: 1, state: {} });
+    const viewport = useViewport();
+    const { isValid, message, settings } = useSettings();
+    const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+    useSettingsButton(() => {
+        if (!isSettingsVisible) {
+            viewport.enterFullscreenIfPossible();
+        }
+        setIsSettingsVisible(!isSettingsVisible);
+    });
+
+    // Open the SettingsForm whenever the settings are not valid
+    useEffect(() => {
+        if (!isValid) {
+            setIsSettingsVisible(true);
+        }
+    }, [isValid]);
+
+    const [appState, setAppState] = useState<AppState>({ index: 0, state: {} });
+
+    if (!isValid) {
+        return (<Welcome appState={appState} setAppState={setAppState} />);
+    }
 
     switch (appState.index) {
         case 0:
             return (<Welcome appState={appState} setAppState={setAppState} />);
         case 1:
-            return (<SearchView appState={appState} setAppState={setAppState} />);
+            return (<SearchPage appState={appState} setAppState={setAppState} />);
         case 2:
             return (<SearchResultsView appState={appState} setAppState={setAppState} />);
         case 3:
@@ -45,22 +56,6 @@ function ImportImagesFromFlickrBlock() {
         default:
             return (<NotFoundPage appState={appState} />);
     }
-}
-
-function Welcome({ appState, setAppState }) {
-    const viewport = useViewport();
-    const importScreen = () => {
-        viewport.enterFullscreenIfPossible();
-        const updatedAppState = { ...appState };
-        updatedAppState.index = 1;
-        setAppState(updatedAppState);
-    }
-
-    return (
-        <Box display="flex" alignItems="center" justifyContent="center" border="default" overflow="hidden" width={viewport.size.width} height={viewport.size.height} padding={0}>
-            <Button onClick={importScreen}>Import from Flickr</Button>
-        </Box>
-    );
 }
 
 function NotFoundPage({ appState }) {

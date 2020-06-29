@@ -8,16 +8,12 @@ import {
   useGlobalConfig,
 } from '@airtable/blocks/ui';
 import _ from 'lodash';
-import debounce from "lodash.debounce";
 import React, { useState } from 'react';
 import CSS from 'csstype';
 
 export function SearchResultsView({ appState, setAppState }) {
   const [items, setItems] = useState(appState.state.selection || []);
   const viewport = useViewport();
-  // viewport.addMaxFullscreenSize({width: 1501});
-  // console.log(appState.state.results)
-  // console.log(JSON.stringify(appState.state.results))
 
   const topbarStyle: CSS.Properties = {
     position: 'fixed',
@@ -35,7 +31,7 @@ export function SearchResultsView({ appState, setAppState }) {
     return _.findIndex(items, function (p) { return p.id === pic.id; }) !== -1;
   }
 
-  const toggleSelectUnselect = (pic) => () => {
+  const toggleSelection = (pic) => () => {
     if (isPicSelected(pic)) {
       setItems(items.filter(function (p) { return p.id !== pic.id; }))
     } else {
@@ -102,9 +98,9 @@ export function SearchResultsView({ appState, setAppState }) {
             const boxStyle = isPicSelected(pic) ? selectedImageStyle : unselectedStyle;
             return (
               <Box width={150} display="flex" alignItems="center" justifyContent="center" key={pic.id} style={boxStyle}>
-                <img src={pic.url_q} id={pic.id} onClick={toggleSelectUnselect(pic)} />
+                <img src={pic.url_q} id={pic.id} onClick={toggleSelection(pic)} />
               </Box>
-            )
+            );
           })
         }
       </Box>

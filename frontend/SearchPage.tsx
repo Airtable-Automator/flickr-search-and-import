@@ -3,6 +3,7 @@ import {
   Input,
   Button,
   Loader,
+  Heading,
   useViewport,
   useGlobalConfig,
 } from '@airtable/blocks/ui';
@@ -10,8 +11,9 @@ import React, { useState } from 'react';
 import CSS from 'csstype';
 import Flickr from 'flickr-sdk';
 import _ from 'lodash';
+import { FLICKR_API_KEY } from './settings';
 
-export function SearchView({ appState, setAppState }) {
+export function SearchPage({ appState, setAppState }) {
   const viewport = useViewport();
   const globalConfig = useGlobalConfig();
 
@@ -28,7 +30,7 @@ export function SearchView({ appState, setAppState }) {
     // this size of 1501, comes from showing thumbnails of size 150x150 in the search results.
     viewport.addMaxFullscreenSize({ width: 1501 });
 
-    const flickrApiKey = globalConfig.get('flickrApiKey') as string;
+    const flickrApiKey = globalConfig.get(FLICKR_API_KEY) as string;
     var flickr = new Flickr(flickrApiKey);
     flickr.photos.search({
       text: searchText,
@@ -66,6 +68,7 @@ export function SearchView({ appState, setAppState }) {
         alignItems="center"
         justifyContent="center"
         padding={0}>
+        <Heading size="xlarge">Search Flickr</Heading>
         {
           isLoading &&
           <Box display='block' zIndex={10}><Loader scale={0.5} /></Box>

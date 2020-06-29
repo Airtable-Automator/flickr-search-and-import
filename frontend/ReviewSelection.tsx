@@ -1,13 +1,10 @@
 import {
   Heading,
   Box,
-  Input,
   Button,
   Text,
   useViewport,
-  useGlobalConfig,
   useBase,
-  loadCSSFromString,
   Loader,
 } from '@airtable/blocks/ui';
 import _ from 'lodash';
@@ -21,7 +18,7 @@ export function ReviewSelection({ appState, setAppState }) {
   const base = useBase();
   const [isLoading, setLoading] = useState(false);
 
-  const [itemsToReview, setItemsToReview] = useState(appState.state.selection);
+  const itemsToReview = appState.state.selection;
 
   const topbarStyle: CSS.Properties = {
     position: 'fixed',
