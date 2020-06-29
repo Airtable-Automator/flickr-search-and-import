@@ -13,23 +13,18 @@ import {
 import React, { useState } from 'react';
 import { FLICKR_API_KEY } from './settings';
 
-export function Welcome({ appState, setAppState }) {
+export function Welcome({ appState, setAppState, setIsSettingsVisible }) {
   // Check if we've Flickr API Key available, if yes, just move onto the next state else 
   // welcome user to the block (probably running it for the first time / a new base installation)
   const globalConfig = useGlobalConfig();
   const apiKeyExists = globalConfig.get(FLICKR_API_KEY) as string;
   const [apiKey, setApiKey] = useState(apiKeyExists);
-  console.log(apiKeyExists);
-
-  if (apiKeyExists && apiKeyExists !== "") {
-    // move ahead to the next state
-    setAppState({ index: 1 });
-  }
 
   const viewport = useViewport();
   const saveSettings = () => {
     globalConfig.setAsync(FLICKR_API_KEY, apiKey);
     setAppState({ index: 1 });
+    setIsSettingsVisible(false);
   }
 
   return (

@@ -4,6 +4,8 @@ import {
   Button,
   Loader,
   Heading,
+  Dialog,
+  Text,
   useViewport,
   useGlobalConfig,
 } from '@airtable/blocks/ui';
@@ -18,6 +20,9 @@ export function SearchPage({ appState, setAppState }) {
   const globalConfig = useGlobalConfig();
 
   const [isLoading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
   const [searchText, setSearchText] = useState(_.get(appState, "state.search.text", "cats"));
   const searchBoxStyle: CSS.Properties = {
     cursor: 'text'
@@ -53,7 +58,8 @@ export function SearchPage({ appState, setAppState }) {
       });
     }).catch(function (err) {
       setLoading(false);
-      console.error('bonk', err);
+      setErrorMsg(err.message);
+      setIsDialogOpen(true);
     });
   }
 
@@ -72,6 +78,22 @@ export function SearchPage({ appState, setAppState }) {
         {
           isLoading &&
           <Box display='block' zIndex={10}><Loader scale={0.5} /></Box>
+        }
+        {
+          isDialogOpen &&
+          <Dialog onClose={() => setIsDialogOpen(false)} width="420px">
+            <Dialog.CloseButton />
+            <Heading>Error</Heading>
+            <Text variant="paragraph">{errorMsg}</Text>
+            <Heading size="small">Possible Solutions</Heading>
+            <Text>
+              <ol>
+                <li>Check the API Key on the Settings of the block.</li>
+              </ol>
+            </Text>
+            <Button onClick={() => setIsDialogOpen(false)}>Close</Button>
+          </Dialog>
+
         }
         <Box width={viewport.size.width / 2} paddingTop='12px' paddingBottom='12px'>
           <Input

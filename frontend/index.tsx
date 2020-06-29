@@ -36,15 +36,13 @@ function ImportImagesFromFlickrBlock() {
         }
     }, [isValid]);
 
-    const [appState, setAppState] = useState<AppState>({ index: 0, state: {} });
+    const [appState, setAppState] = useState<AppState>({ index: 1, state: {} });
 
-    if (!isValid) {
-        return (<Welcome appState={appState} setAppState={setAppState} />);
+    if (!isValid || isSettingsVisible) {
+        return (<Welcome appState={appState} setAppState={setAppState} setIsSettingsVisible={setIsSettingsVisible}/>);
     }
 
     switch (appState.index) {
-        case 0:
-            return (<Welcome appState={appState} setAppState={setAppState} />);
         case 1:
             return (<SearchPage appState={appState} setAppState={setAppState} />);
         case 2:
