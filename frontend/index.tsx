@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 import { SearchView } from './SearchView';
 import { SearchResultsView } from './SearchResultsView';
 import { ReviewSelection } from './ReviewSelection';
+import { ThankYou } from './ThankYouView';
 
 // Airtable SDK limit: we can only update 50 records at a time. For more details, see
 // https://github.com/Airtable/blocks/tree/blob/packages/sdk/docs/guide_writes.md#size-limits-rate-limits
@@ -32,13 +33,15 @@ function ImportImagesFromFlickrBlock() {
 
     switch (appState.index) {
         case 0:
-            return (<Welcome setAppState={setAppState} appState={appState} />);
+            return (<Welcome appState={appState} setAppState={setAppState} />);
         case 1:
-            return (<SearchView setAppState={setAppState} />);
+            return (<SearchView appState={appState} setAppState={setAppState} />);
         case 2:
             return (<SearchResultsView appState={appState} setAppState={setAppState} />);
         case 3:
             return (<ReviewSelection appState={appState} setAppState={setAppState} />);
+        case 4:
+            return (<ThankYou appState={appState} setAppState={setAppState} />);
         default:
             return (<NotFoundPage appState={appState} />);
     }
@@ -48,7 +51,9 @@ function Welcome({ appState, setAppState }) {
     const viewport = useViewport();
     const importScreen = () => {
         viewport.enterFullscreenIfPossible();
-        setAppState({ index: 1 });
+        const updatedAppState = { ...appState };
+        updatedAppState.index = 1;
+        setAppState(updatedAppState);
     }
 
     return (

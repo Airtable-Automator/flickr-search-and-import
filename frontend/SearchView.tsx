@@ -9,14 +9,14 @@ import {
 import React, { useState } from 'react';
 import CSS from 'csstype';
 import Flickr from 'flickr-sdk';
+import _ from 'lodash';
 
-
-export function SearchView({ setAppState }) {
+export function SearchView({ appState, setAppState }) {
   const viewport = useViewport();
   const globalConfig = useGlobalConfig();
 
   const [isLoading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState("cats");
+  const [searchText, setSearchText] = useState(_.get(appState, "state.search.text", "cats"));
   const searchBoxStyle: CSS.Properties = {
     cursor: 'text'
   }

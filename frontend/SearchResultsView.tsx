@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import CSS from 'csstype';
 
 export function SearchResultsView({ appState, setAppState }) {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(appState.state.selection || []);
   const viewport = useViewport();
   // viewport.addMaxFullscreenSize({width: 1501});
   // console.log(appState.state.results)
@@ -44,7 +44,9 @@ export function SearchResultsView({ appState, setAppState }) {
   }
 
   const backToSearch = () => {
-    setAppState({ index: 1 });
+    const updatedAppState = { ...appState };
+    updatedAppState.index = 1;
+    setAppState(updatedAppState);
   }
 
   // window.onscroll = debounce(() => {
@@ -73,7 +75,7 @@ export function SearchResultsView({ appState, setAppState }) {
   // }, 100);
 
   const reviewItems = () => {
-    const updatedAppState = {...appState};
+    const updatedAppState = { ...appState };
     updatedAppState.index = 3;
     updatedAppState.state.selection = items;
     setAppState(updatedAppState);
