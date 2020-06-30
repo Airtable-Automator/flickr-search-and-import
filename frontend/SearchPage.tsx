@@ -36,7 +36,7 @@ export function SearchPage({ appState, setAppState }) {
     viewport.addMaxFullscreenSize({ width: 1501 });
 
     const flickrApiKey = globalConfig.get(FLICKR_API_KEY) as string;
-    var flickr = new Flickr(flickrApiKey);
+    const flickr = new Flickr(flickrApiKey);
     flickr.photos.search({
       text: searchText,
       page: 1,

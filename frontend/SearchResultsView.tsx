@@ -81,7 +81,7 @@ export function SearchResultsView({ appState, setAppState }) {
     <Box>
       <Box display="flex" style={topbarStyle} height={50} borderBottom='thick' width={viewport.size.width} justifyContent="space-between" alignItems="center">
         <Box paddingLeft='10px' display="flex" justifyContent="left">
-          <Heading size="large">Showing search results for: {appState.state.search.text}</Heading>
+          <Heading size="large">Showing {appState.state.results.photo.length} results for: {appState.state.search.text}</Heading>
         </Box>
         <Box display="flex" justifyContent="right">
           <Box paddingRight='10px'>
