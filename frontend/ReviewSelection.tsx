@@ -49,7 +49,6 @@ export function ReviewSelection({ appState, setAppState }) {
 
   const importImages = async () => {
     setLoading(true);
-    console.log("Importing " + appState.state.selection.length + " items into the base");
     const nameOfTable = "Flickr Dataset" // Make this configurable with a sensible default
     const fields = [
       { name: 'Title', type: FieldType.SINGLE_LINE_TEXT },
@@ -86,7 +85,6 @@ export function ReviewSelection({ appState, setAppState }) {
         },
       }
     });
-    console.log(newRecords);
     createRecordsInBatches(table, newRecords);
 
     setLoading(false);
