@@ -25,7 +25,8 @@ export function Welcome({ appState, setAppState, setIsSettingsVisible }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const viewport = useViewport();
-  const saveSettings = () => {
+  const saveSettings = (e) => {
+    e.preventDefault();
     setLoading(true);
     const flickr = new Flickr(apiKey);
     flickr.test.echo({})
