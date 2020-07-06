@@ -41,6 +41,7 @@ export function SearchPage({ appState, setAppState }) {
       text: searchText,
       page: 1,
       per_page: 50,
+      sort: 'relevance',
       extras: 'owner_name,tags,url_q,url_z,url_o',
     }).then(function (res) {
       viewport.enterFullscreenIfPossible();
